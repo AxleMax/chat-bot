@@ -1,0 +1,135 @@
+{
+    "count": 1,
+    "servers": [
+        {
+            "fault": null,
+            "id": "38485551-188f-4a2b-b024-53f6232af1eb",
+            "name": "hcss_ecs_5297",
+            "addresses": {
+                "ee8f83b1-3066-40fc-ab2a-463d7bda5246": [
+                    {
+                        "version": "4",
+                        "addr": "192.168.12.134",
+                        "primary": true,
+                        "OS-EXT-IPS-MAC:mac_addr": "fa:16:3e:ee:52:cc",
+                        "OS-EXT-IPS:type": "fixed",
+                        "OS-EXT-IPS:port_id": "fbaf0729-4a86-4a6a-920e-bc2f435c335b"
+                    },
+                    {
+                        "version": "4",
+                        "addr": "111.119.234.173",
+                        "primary": true,
+                        "OS-EXT-IPS-MAC:mac_addr": "fa:16:3e:ee:52:cc",
+                        "OS-EXT-IPS:type": "floating",
+                        "OS-EXT-IPS:port_id": "fbaf0729-4a86-4a6a-920e-bc2f435c335b"
+                    }
+                ]
+            },
+            "flavor": {
+                "disk": "0",
+                "vcpus": "2",
+                "ram": "1024",
+                "id": "t7.large.05",
+                "name": "t7.large.05",
+                "gpus": [],
+                "asic_accelerators": []
+            },
+            "accessIPv4": "",
+            "accessIPv6": "",
+            "status": "ACTIVE",
+            "progress": 0,
+            "hostId": "8f447adb54dc7cce4ba9fcf40f192b5e156a3421c58cf7c5fa4299ae",
+            "updated": "2025-01-11T09:38:08Z",
+            "created": "2024-11-23T06:03:47Z",
+            "metadata": {
+                "lockScene": "OTHER_SVC_LOCK=changeos,resize,delete,attachvolume,detachvolume,detachnics,attachnics,renewfee",
+                "charging_mode": "1",
+                "vpc_id": "ee8f83b1-3066-40fc-ab2a-463d7bda5246",
+                "metering.product_id": "OFFI985166072928452623",
+                "lockSource": "hcss",
+                "lockSourceId": "6741702306f7cb39d76de54a",
+                "__support_agent_list": "hss,hss-pc,ces",
+                "metering.imagetype": "gold",
+                "metering.order_id": "CS2411231409RB0LP",
+                "image_name": "Ubuntu 22.04 server 64bit",
+                "metering.resourcespeccode": "t7.large.05.linux",
+                "os_type": "Linux",
+                "metering.resourcetype": "1",
+                "metering.image_id": "1c136556-5a40-4382-884a-eb340532dc58",
+                "os_bit": "64",
+                "lockCheckEndpoint": "",
+                "cascaded.instance_extrainfo": "clock_adjustment:0,pcibridge:1,virtio_bus_count:16"
+            },
+            "tags": [
+                "_sys_type_hcss_l"
+            ],
+            "description": "",
+            "locked": false,
+            "config_drive": "",
+            "tenant_id": "c90a6c2630774fccb03ff32a8aa947f2",
+            "user_id": "acde61fe6e7d4f71ae435decdff96cca",
+            "key_name": null,
+            "os-extended-volumes:volumes_attached": [
+                {
+                    "id": "68d09799-8c36-4a82-b659-0ce73c86cf68",
+                    "delete_on_termination": "false",
+                    "device": "/dev/vda",
+                    "bootIndex": "0"
+                }
+            ],
+            "OS-EXT-STS:task_state": null,
+            "OS-EXT-STS:power_state": 1,
+            "OS-EXT-STS:vm_state": "active",
+            "OS-EXT-SRV-ATTR:host": "c7079c1d4bd14f4eb067a5ce85c711de156ae378a58a5277c7eaed22",
+            "OS-EXT-SRV-ATTR:instance_name": "instance-01a2940d",
+            "OS-EXT-SRV-ATTR:hypervisor_hostname": "f6071b763b647ed6d77bcbf65ccaa53ce5155748cec139a8a72a362e",
+            "OS-DCF:diskConfig": "MANUAL",
+            "OS-EXT-AZ:availability_zone": "ap-southeast-3a",
+            "os:scheduler_hints": {},
+            "OS-EXT-SRV-ATTR:root_device_name": "/dev/vda",
+            "OS-EXT-SRV-ATTR:ramdisk_id": "",
+            "enterprise_project_id": "0",
+            "OS-EXT-SRV-ATTR:user_data": "null",
+            "OS-SRV-USG:launched_at": "2024-11-23T06:04:00.000000",
+            "OS-EXT-SRV-ATTR:kernel_id": "",
+            "OS-EXT-SRV-ATTR:launch_index": 0,
+            "host_status": "UP",
+            "OS-EXT-SRV-ATTR:reservation_id": "r-pxt26x0p",
+            "OS-EXT-SRV-ATTR:hostname": "hcss-ecs-5297",
+            "OS-SRV-USG:terminated_at": null,
+            "sys_tags": [
+                {
+                    "key": "_sys_enterprise_project_id",
+                    "value": "0"
+                }
+            ],
+            "security_groups": [
+                {
+                    "id": "10f79879-f965-43ea-a8a3-ae2d88db1d81",
+                    "name": "sg-default-smb"
+                }
+            ],
+            "image": {
+                "id": "1c136556-5a40-4382-884a-eb340532dc58"
+            },
+            "hypervisor": null,
+            "auto_terminate_time": "",
+            "cpu_options": {
+                "hw:cpu_threads": null
+            },
+            "enclave_options": {
+                "enabled": false
+            },
+            "capacity_reservation_id": null,
+            "capacity_reservation_specification": {
+                "id": null,
+                "preference": null
+            },
+            "security_options": {
+                "secure_boot_enabled": null,
+                "tpm_enabled": null
+            },
+            "spod_id": null
+        }
+    ]
+}

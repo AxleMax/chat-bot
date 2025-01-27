@@ -1,0 +1,15 @@
+{
+  "name": "qqbot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "pro": "set NODE_OPTIONS=--no-warnings && set NODE_ENV=production && node index.js",
+    "dev": "set NODE_OPTIONS=--no-warnings && nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}
