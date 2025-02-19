@@ -31,16 +31,16 @@ module.exports = (qBot) => {
         if (data?.raw_message?.includes('/info')) {
             const args = data.raw_message.split(' ')
             const r = args[2] || 1
-            console.log(r)
             const { host, port } = mcServerUtil.parseAddress(args[1])
             const status = await mcStatus(host, port, r);
+            console.log(status)
             if (status.ok === 1) {
 
                 const statusString = `
                 Server Status:
                 MOTD: ${status.data.motd.clean}
                 Version: ${status.data.version.name}
-                Ping: ${status.data.motd.roundTripLatency || 0} ms
+                Ping: ${status.data.roundTripLatency || 0} ms
                 Players Online: ${status.data.players.online}
                 Max Players: ${status.data.players.max}
                         `;

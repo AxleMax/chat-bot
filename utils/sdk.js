@@ -2,6 +2,25 @@ class SDK {
     constructor(qbot) {
         this.bot = qbot
     }
+    loadPlugin(pluginName) {
+        try {
+            if (!pluginName) return
+            const pluginPath = `${this.bot.path}/plugins/${pluginName}`
+            delete require.cache[require.resolve(pluginPath)]
+            const plugin = require(pluginPath)
+            plugin(this.bot)
+            if (this.bot.plugins.indexOf(pluginName) === -1) {
+                this.bot.plugins.push(pluginName)
+                console.log(`${pluginName} 加载成功!`)
+            }else{
+                console.log(`${pluginName} 重新加载成功!`)
+            }
+
+        } catch (err) {
+            //throw new Error(`${pluginName} 加载失败>>`,err)
+            console.log(err)
+        }
+    }
     generateEcho() {
         return `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     }
@@ -19,7 +38,8 @@ class SDK {
         }
         this.send(ctx)
     }
-    async send_group_msg(id,msg){
+    async send_group_msg(id, msg) {
+
         const ctx = {
             action: "send_group_msg",
             params: {
@@ -39,8 +59,19 @@ class SDK {
         }
         this.send(ctx)
     }
+
+    like(id,times) {
+        const ctx = {
+            action: 'send_like',
+            params: {
+                "user_id": id,
+                "times": times
+            }
+        }
+        this.send(ctx)
+    }
 }
 
 module.exports = (qBot) => {
-    qBot.sdk = new SDK(qBot)
+    qBot.sdk = new SDK(qBot);
 }

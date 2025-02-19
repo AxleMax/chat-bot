@@ -1,16 +1,14 @@
 
 class qBot {
-    constructor(url) {
-        this.url = url
+    constructor() {
         this.ws = null
         this.handlers = []
         this.plugins = []
-        this.configs = null
+        this.config = null
+        this.path = process.cwd()
         this.init()
     }
-    loadPlugins(plugins) {
 
-    }
     on(event, handler) {
         this.handlers.push({ event, callback: handler })
     }
@@ -32,9 +30,12 @@ class qBot {
     }
 
     init() {
-        this.configs = require(`${process.cwd()}\\configs\\configs.json`)
+        this.config = require(`${process.cwd()}\\configs\\configs.json`)
         const WebSocket = require('ws');
-        this.ws = new WebSocket('ws://192.168.3.102:3001');
+        if(!this.config || !this.config.ws) {
+            throw new Error(`The 'ws' property is requiredm,Check the configuration file.`)
+        }
+        this.ws = new WebSocket(this.config.ws);
         this.ws.on('open', () => {
             console.log('WebSocket 连接已建立');
         });

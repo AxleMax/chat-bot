@@ -1,0 +1,21 @@
+{
+  "schedules": [
+    {
+      "cron": "* * * * * *",
+      "command": "0时10分执行",
+      "repeat": 1,
+      "once": true
+    },
+    {
+      "cron": "* * * * * *",
+      "command": [
+        "每隔一年1月1日0时0分1秒执行",
+        "test2",
+        "test3",
+        "test4"
+      ],
+      "repeat": 1,
+      "once": false
+    }
+  ]
+}
