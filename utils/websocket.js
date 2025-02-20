@@ -7,6 +7,7 @@ class qBot {
         this.config = null
         this.path = process.cwd()
         this.init()
+        this.records = []
     }
 
     on(event, handler) {
@@ -32,7 +33,7 @@ class qBot {
     init() {
         this.config = require(`${process.cwd()}\\configs\\configs.json`)
         const WebSocket = require('ws');
-        if(!this.config || !this.config.ws) {
+        if (!this.config || !this.config.ws) {
             throw new Error(`The 'ws' property is requiredm,Check the configuration file.`)
         }
         this.ws = new WebSocket(this.config.ws);

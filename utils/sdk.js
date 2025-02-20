@@ -4,6 +4,13 @@ const path = require('path')
 class SDK {
     constructor(qbot) {
         this.bot = qbot
+        this.records = []
+    }
+    unloadPlugin(pluginName) {
+        if (!pluginName) return
+        const pluginPath = `${this.bot.path}/plugins/${pluginName}`
+        delete require.cache[require.resolve(pluginPath)]
+        this.bot.plugins.splice(this.bot.plugins.indexOf(pluginName), 1)
     }
     loadPlugin(pluginName) {
         try {
@@ -75,26 +82,29 @@ class SDK {
     }
 
     like(id, times) {
+        const echo = this.generateEcho()
         const ctx = {
             action: 'send_like',
             params: {
                 "user_id": id,
                 "times": times
-            }
+            },
+            echo: echo
         }
         this.send(ctx)
+        return echo
     }
-    baseImg(where,name) {
-        if(!where || !name){
+    baseImg(where, name) {
+        if (!where || !name) {
             return console.warn('propety `where` (piture storage type) and `name` is in needed')
         }
-        const picUrl = path.join(this.bot.path,'resource','pitures',where,name)
-        if(!fs.existsSync(picUrl)){
+        const picUrl = path.join(this.bot.path, 'resource', 'pitures', where, name)
+        if (!fs.existsSync(picUrl)) {
             return console.error('file not found')
         }
         const baseData = fs.readFileSync(picUrl).toString('base64')
         const ext = picUrl.split('.').pop().toLowerCase();
-    
+
         let mimeType = '';
         switch (ext) {
             case 'jpg':
@@ -112,6 +122,28 @@ class SDK {
         }
 
         return `data:${mimeType};base64,${baseData}`;
+    }
+    findK = (obj, key) => {
+        function handle(obj) {
+            if (typeof obj === 'object') {
+                for (let i in obj) {
+                    if (typeof obj[i] === 'object') {
+                        if (handle(obj[i])) {
+                            return true;
+                        }
+                    } else if (typeof obj[i] === 'string' && obj[i].includes(key)) {
+                        return true;
+                    }
+                }
+            } else if (typeof obj === 'string' && obj.includes(key)) {
+                return true;
+            }
+            return false;
+        }
+        if (Array.isArray(obj)) {
+            return obj.filter(v => handle(v));
+        }
+        return [];
     }
 }
 
