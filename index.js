@@ -2,13 +2,15 @@ const readline = require('readline')
 const Bot = require('./utils/websocket')
 const sdk = require('./utils/sdk')
 const chatBot = new Bot()
+
 sdk(chatBot)
 
-chatBot.sdk.loadPlugin('mcServerInfo')
-chatBot.sdk.loadPlugin('crons')
+chatBot.sdk.loadPlugins()
+
 const r1 = readline.createInterface({
     input: process.stdin
 })
+
 r1.on('line', (line) => {
     try {
         eval(line)

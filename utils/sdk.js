@@ -1,3 +1,6 @@
+const fs = require('fs')
+const path = require('path')
+
 class SDK {
     constructor(qbot) {
         this.bot = qbot
@@ -12,13 +15,24 @@ class SDK {
             if (this.bot.plugins.indexOf(pluginName) === -1) {
                 this.bot.plugins.push(pluginName)
                 console.log(`${pluginName} 加载成功!`)
-            }else{
+            } else {
                 console.log(`${pluginName} 重新加载成功!`)
             }
 
         } catch (err) {
             //throw new Error(`${pluginName} 加载失败>>`,err)
             console.log(err)
+        }
+    }
+    loadPlugins(arr = []) {
+        if (typeof arr === 'object' && arr.length > 0) {
+            for (let i of arr) {
+                this.loadPlugin(i)
+            }
+        } else if (this.bot.config && this.bot.config.plugins.length > 0) {
+            for (let i of this.bot.config.plugins) {
+                this.loadPlugin(i)
+            }
         }
     }
     generateEcho() {
@@ -60,7 +74,7 @@ class SDK {
         this.send(ctx)
     }
 
-    like(id,times) {
+    like(id, times) {
         const ctx = {
             action: 'send_like',
             params: {
@@ -69,6 +83,35 @@ class SDK {
             }
         }
         this.send(ctx)
+    }
+    baseImg(where,name) {
+        if(!where || !name){
+            return console.warn('propety `where` (piture storage type) and `name` is in needed')
+        }
+        const picUrl = path.join(this.bot.path,'resource','pitures',where,name)
+        if(!fs.existsSync(picUrl)){
+            return console.error('file not found')
+        }
+        const baseData = fs.readFileSync(picUrl).toString('base64')
+        const ext = picUrl.split('.').pop().toLowerCase();
+    
+        let mimeType = '';
+        switch (ext) {
+            case 'jpg':
+            case 'jpeg':
+                mimeType = 'image/jpeg';
+                break;
+            case 'png':
+                mimeType = 'image/png';
+                break;
+            case 'gif':
+                mimeType = 'image/gif';
+                break;
+            default:
+                mimeType = 'application/octet-stream';
+        }
+
+        return `data:${mimeType};base64,${baseData}`;
     }
 }
 
