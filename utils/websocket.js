@@ -9,12 +9,19 @@ class qBot {
         this.init()
         this.records = []
     }
-
+    once(event, handler) {
+        this.handlers.push({ event, callback: handler, once: true })
+    }
     on(event, handler) {
         this.handlers.push({ event, callback: handler })
     }
     emit(event, data) {
-        this.handlers.filter(item => item.event === event).forEach(item => item.callback(data))
+        this.handlers.filter(item => item.event === event).forEach(item => {
+            item.callback(data)
+            if (item.once) {
+                this.removeListener(event, item.callback)
+            }
+        })
     }
     removeListener(event, handler) {
         this.handlers = this.handlers.filter(item => {
@@ -39,6 +46,7 @@ class qBot {
         this.ws = new WebSocket(this.config.ws);
         this.ws.on('open', () => {
             console.log('WebSocket 连接已建立');
+            this.emit('socketed')
         });
 
         this.ws.on('message', (data) => {

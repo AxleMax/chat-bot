@@ -1,5 +1,23 @@
+class Like {
+    constructor(bot) {
+        this.bot = bot
+    }
+    async like({ qq, times }) {
+        this.bot.sdk.like(qq, times)
+        if (typeof qq === 'object') {
+            for (let i of qq) {
+                this.bot.sdk.like(i, times)
+                await this.bot.sdk.sleep(100)
+            }
+        } else if (typeof qq === 'string') {
+            this.bot.sdk.like(qq, times)
+        }
+    }
 
+}
 module.exports = (bot) => {
+    bot.plugins.like = new Like(bot)
+
     bot.on('message', (data) => {
         console.log('like', JSON.stringify(data))
         console.log('1 records', bot.records)
@@ -18,12 +36,12 @@ module.exports = (bot) => {
             const msg = data.status === 'failed' ? '爪巴' : [{ "type": "face", "data": { "id": "424" } }, { "type": "face", "data": { "id": "333" } }, { "type": "text", "data": { "text": "➕10" } }]
 
             if (record.message_type === 'group') {
-                bot.sdk.send_group_msg(record.group_id, msg)    
+                bot.sdk.send_group_msg(record.group_id, msg)
             }
             if (record.message_type === 'private') {
                 bot.sdk.send_private_msg(record.sender.user_id, msg)
             }
-            bot.records.splice(bot.records.findIndex(v=>v.echo===data.echo), 1)
+            bot.records.splice(bot.records.findIndex(v => v.echo === data.echo), 1)
         }
         console.log('2 records', bot.records)
     })

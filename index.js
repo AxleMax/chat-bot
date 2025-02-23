@@ -3,10 +3,10 @@ const Bot = require('./utils/websocket')
 const sdk = require('./utils/sdk')
 const chatBot = new Bot()
 
-sdk(chatBot)
-
-chatBot.sdk.loadPlugins()
-
+chatBot.once('socketed', () => {
+    sdk(chatBot)
+    chatBot.sdk.loadPlugins()
+})
 const r1 = readline.createInterface({
     input: process.stdin
 })

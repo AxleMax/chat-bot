@@ -94,6 +94,16 @@ class SDK {
         this.send(ctx)
         return echo
     }
+    reply(data, ctx) {
+
+    }
+    sleep(ms) {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve()
+            }, ms)
+        })
+    }
     baseImg(where, name) {
         if (!where || !name) {
             return console.warn('propety `where` (piture storage type) and `name` is in needed')
