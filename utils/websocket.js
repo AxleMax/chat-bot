@@ -1,3 +1,5 @@
+const fs = require('fs')
+const path = require('path')
 
 class qBot {
     constructor() {
@@ -38,7 +40,7 @@ class qBot {
     }
 
     init() {
-        this.config = require(`${process.cwd()}\\configs\\configs.json`)
+        this.config = JSON.parse(fs.readFileSync(path.join(this.path, 'configs', 'configs.json')))
         const WebSocket = require('ws');
         if (!this.config || !this.config.ws) {
             throw new Error(`The 'ws' property is requiredm,Check the configuration file.`)
