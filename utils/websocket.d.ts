@@ -46,4 +46,11 @@ export interface Message{
 }
 export interface Bot {
     sdk: SDK;
+    plugins: Array;
+    records: Record[];
+}
+
+export interface Record{
+    payload:Message,
+    echo:string    
 }
