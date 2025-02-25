@@ -77,4 +77,11 @@ class qBot {
     }
 }
 
-module.exports = qBot
+module.exports = {
+    createBot: () => {
+        return new qBot()
+    },
+    pluginInit: (bot) => {
+        return bot
+    }
+}

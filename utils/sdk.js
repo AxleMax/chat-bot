@@ -94,8 +94,15 @@ class SDK {
         this.send(ctx)
         return echo
     }
-    reply(data, ctx) {
+    send_auto_msg(payload, msg) {
+        const { message_type, group_id, sender } = payload
 
+        if (message_type === 'group') {
+            this.send_group_msg(group_id, msg)
+        }
+        if (message_type === 'private') {
+            this.send_private_msg(sender.user_id, msg)
+        }
     }
     sleep(ms) {
         return new Promise((resolve) => {

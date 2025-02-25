@@ -11,5 +11,9 @@
   "description": "",
   "dependencies": {
     "ws": "^8.18.0"
-  }
+  },
+  "workspaces": [
+    "plugins/*",
+    "node_modules"
+  ]
 }

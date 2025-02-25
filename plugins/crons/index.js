@@ -101,6 +101,7 @@ class CRON {
 
 module.exports = (bot) => {
     bot.plugins.cron = new CRON(bot)
+    bot.sdk.send_private_msg('123',[])
     bot.on('message', (data) => {
         console.log(data)
     })

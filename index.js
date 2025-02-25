@@ -1,11 +1,11 @@
 const readline = require('readline')
-const Bot = require('./utils/websocket')
+const qBot = require('./utils/websocket')
 const sdk = require('./utils/sdk')
-const chatBot = new Bot()
+const bot = qBot.createBot()
 
-chatBot.once('socketed', () => {
-    sdk(chatBot)
-    chatBot.sdk.loadPlugins()
+bot.once('socketed', () => {
+    sdk(bot)
+    bot.sdk.loadPlugins()
 })
 const r1 = readline.createInterface({
     input: process.stdin

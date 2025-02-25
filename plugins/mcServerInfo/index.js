@@ -27,7 +27,7 @@ const mcStatus = async (host, port, r) => {
 }
 
 module.exports = (qBot) => {
-    qBot.on('group', async (data) => {
+    qBot.on('message', async (data) => {
         if (data?.raw_message?.includes('/info')) {
             const args = data.raw_message.split(' ')
             const r = args[2] || 1
@@ -47,17 +47,17 @@ module.exports = (qBot) => {
 
                 console.log(statusString)
                 const msg = status.data.favicon ? [{ type: 'image', data: { file: status?.data?.favicon } }, { type: 'text', data: { text: statusString } }] : [{ type: 'text', data: { text: statusString } }];
-                qBot.sdk.send_group_msg(
-                    data.group_id,
+                qBot.sdk.send_auto_msg(
+                    data,
                     msg
                 )
             } else if (status.ok === -1) {
-                qBot.sdk.send_group_msg(
-                    data.group_id,
+                qBot.sdk.send_auto_msg(
+                    data,
                     [{ type: 'text', data: { text: status.data } }]
                 )
             }
-
         }
     })
+
 }
