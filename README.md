@@ -18,7 +18,6 @@
 > │  └─ ws
 > ├─ plugins
 > │  ├─ crons
-> │  ├─ hwcloud
 > │  ├─ like
 > │  └─ mcServerInfo
 > ├─ resource
