@@ -2,3 +2,4 @@ node_modules/
 configs/*
 !configs/configs.example.json
 .vscode
+resource/*

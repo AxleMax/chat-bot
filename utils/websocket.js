@@ -53,7 +53,7 @@ class qBot {
 
         this.ws.on('message', (data) => {
             const parseData = JSON.parse(data)
-            if (parseData.post_type !== 'meta_event') {
+            if (parseData.post_type === 'message') {
                 this.emit('message', parseData)
                 if (parseData.message_type === 'private') {
                     this.emit('private', parseData)
