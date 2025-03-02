@@ -8,7 +8,21 @@ const sleep = (time) => {
         }, time * 1000)
     })
 }
-module.exports = () => {
+const unlock = async (bot) => {
+    return new Promise(async (resolve, reject) => {
+        const compass = bot.inventory.items().find(item => item.name === 'compass')
+        if (compass) {
+            bot.equip(compass, 'hand')
+            await bot.activateItem()
+            console.log('成功使用指南针')
+            await sleep(2)
+            resolve()
+        }
+        resolve('背包没有指南针')
+    })
+
+}
+module.exports = (listen) => {
     return new Promise((resolve, reject) => {
         try {
             const bot = mineflayer.createBot({
@@ -18,16 +32,17 @@ module.exports = () => {
             })
 
             bot.on('title', async (data) => {
+                console.log(data)
                 if (data && data?.value.includes('/L <密码>')) {
                     bot.chat(`/L ${config.password}`)
                 }
-                if (data && data?.value.includes('<密码>进行注册')) {
+                if (data && data?.value.includes('离线玩家请注册')) {
                     bot.chat(`/reg ${config.password} ${config.password}`)
                 }
                 if (data && data?.value.includes('登陆成功')) {
                     console.log('登录成功')
                     await sleep(3)
-                    await unlock()
+                    await unlock(bot)
                     await sleep(5)
                 }
                 if (data && data?.value.includes('注册成功')) {
@@ -40,8 +55,10 @@ module.exports = () => {
                 resolve(bot)
             })
             bot.on('chat:any', async (any) => {
+                console.log(any)
+                listen.emit('chat', any)
                 if (any[0].includes('所在的服务器出现故障, 已连接到登录服.' || any[0].includes('无效指令,请输入/help查看帮助！'))) {
-                    await unlock()
+                    await unlock(bot)
                     console.log('unlock')
                 }
             })

@@ -1,12 +1,20 @@
-function* myGenerator() {
-    console.log('Start');
-    yield 1;  // 暂停并返回 1
-    console.log('Resume');
-    yield 2;  // 暂停并返回 2
-    console.log('End');
-  }
-  
-  const gen = myGenerator();
-  console.log(gen.next().value);  // 输出 1
-  console.log(gen.next().value);  // 输出 2
-  console.log(gen.next().value);  // 输出 undefined
+let EventEmitter = require('events').EventEmitter;
+let event = new EventEmitter();
+
+
+setInterval(() => {
+  event.emit('hello', 1)
+}, 1000);
+
+setInterval(() => {
+  event.emit('hello', 2)
+}, 2000);
+
+event.on('hello', (data) => {
+  console.log(data)
+})  
+
+setTimeout(() => {
+  console.log('removeAlllisteners')
+  event.removeAllListeners()
+}, 8000);
