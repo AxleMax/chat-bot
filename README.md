@@ -10,7 +10,7 @@
 | crons        | 定时执行各种插件自定义功能               |
 | like         | 好友信息卡片点赞功能                     |
 | mcServerInfo | 通过ip查询返回服务器图片、在线人数等信息 |
-
+| mcBot | 提供mc机器人实例 |
 ##### 基本目录结构
 
 > ```
@@ -19,7 +19,8 @@
 > ├─ plugins
 > │  ├─ crons
 > │  ├─ like
-> │  └─ mcServerInfo
+> │  ├─ mcServerInfo
+> │  └─ mcBot
 > ├─ resource
 > │  └─ pitures
 > └─ utils
