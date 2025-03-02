@@ -111,6 +111,14 @@ class SDK {
             }, ms)
         })
     }
+    baseText(text) {
+        if (!text) {
+            return console.warn('Property `text` is needed');
+        }
+
+        const baseData = Buffer.from(text).toString('base64');
+        return `data:text/plain;base64,${baseData}`;
+    }
     baseImg(where, name) {
         if (!where || !name) {
             return console.warn('propety `where` (piture storage type) and `name` is in needed')

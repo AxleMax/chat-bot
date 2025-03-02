@@ -1,4 +1,5 @@
 const { pluginInit } = require('../../utils/websocket')
+const { generateBotInfoHTML } = require('./lib')
 const path = require('path')
 const fs = require('fs')
 const DNS = require("dns")
@@ -102,19 +103,18 @@ module.exports = (qBot) => {
             const raw_msg = payload.raw_message
             if (!raw_msg || !raw_msg.startsWith('/mcbot')) return
             const args = raw_msg.split(' ')
-
             let info = null
             let res
             switch (true) {
                 case args[1] === 'list':
                     res = await bot.plugins.mcbot.list()
-                    console.log(res)
+
                     if (res.status) {
                         info = `当前在线玩家：${res.data.join(', ')}`
                     } else {
                         info = `获取失败`
                     }
-                    // bot.sdk.send_auto_msg(payload, [{
+                    // bot.sdk.send_auto_msg(reply, [{
                     //     type: 'file',
                     //     data: {
                     //         "file": bot.sdk.baseText(info)
@@ -137,7 +137,24 @@ module.exports = (qBot) => {
                         `/mcbot help --帮助\n/mcbot list --查看在线玩家\n/mcbot join <server> --加入<server>服务器\n/mcbot listen --监听服务器,前提<join>\n/mcbot status --查看当前bot状态\n/mcbot stop --停止mcbot`
                     break;
                 case args[1] === 'status':
-                    info = `当前状态：${bot.plugins.mcbot.isRunning ? '运行中' : '未运行'}\n当前服务器:${bot.plugins.mcbot.server || '未加入'}\n服务器人数:${bot.plugins.mcbot.ins ? Object.keys(bot.plugins.mcbot.ins.players).length : 0}\n当前是否监听:${bot.plugins.mcbot.isListening}`
+
+                    if (bot.plugins.htmlToBase64) {
+                        await bot.plugins.htmlToBase64(generateBotInfoHTML(bot.plugins.mcbot), '.info-card').then((res) => {
+
+                            bot.sdk.send_auto_msg(payload, [{
+                                type: "image",
+                                data: {
+                                    "file": res
+                                }
+                            }])
+                            fs.writeFileSync('./record.txt', res)
+                            console.log('发送成功')
+                        }).catch(err => {
+                            console.log('html to base64 err>>', err)
+                        })
+                    } else {
+                        info = `当前状态：${bot.plugins.mcbot.isRunning ? '运行中' : '未运行'}\n当前服务器:${bot.plugins.mcbot.server || '未加入'}\n服务器人数:${bot.plugins.mcbot.ins ? Object.keys(bot.plugins.mcbot.ins.players).length : 0}\n当前是否监听:${bot.plugins.mcbot.isListening}`
+                    }
                     break;
                 case args[1] === 'stop':
                     res = await bot.plugins.mcbot.stop()
@@ -148,6 +165,7 @@ module.exports = (qBot) => {
                     break;
             }
             if (!info) return
+            console.log(info)
             bot.sdk.send_auto_msg(payload, [{
                 type: 'text',
                 data: {

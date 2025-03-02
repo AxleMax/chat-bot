@@ -3,3 +3,4 @@ configs/*
 !configs/configs.example.json
 .vscode
 resource/*
+test.js

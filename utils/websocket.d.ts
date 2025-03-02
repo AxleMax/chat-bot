@@ -33,11 +33,12 @@ export class SDK {
     get_group_list(): void;
     loadPlugin(plugin: string): void;
     loadPlugins(): void;
-    send_auto_msg(payload:Message,msgArray:Msg[]):void
+    send_auto_msg(payload:Message,msgArray:Msg[]):void;
+    baseText(text:string):Base64URLString;
 }
 export function SDKLOAD(qBot: Bot): void
 
-export type Msg = {type:"text",data:{text:string}} |{type:"image",data:{image_url:string}}|{type:"record",data:{record_url:string}}|{type:"json",data:{json_data:object}}|{type:"face",data:{face_url:string}}|{type:"video",data:{video_url:string}}|{type:"reply",data:{reply_msg:string}}|{type:"music",data:{music_url:string}}|{type:"file",data:{file_url:string}};
+export type Msg = {type:"text",data:{text:string}} |{type:"image",data:{file:string}}|{type:"record",data:{file:string}}|{type:"json",data:{data:object}}|{type:"face",data:{id:string}}|{type:"video",data:{file:string}}|{type:"reply",data:{id:string}}|{type:"music",data:{type:'qq'|'163'|'kugou',id:string}}|{type:"file",data:{file:string}};
 
 export interface Message{
     message_type:string,
